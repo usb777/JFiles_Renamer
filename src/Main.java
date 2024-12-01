@@ -11,12 +11,14 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
-    final static String PATH = "/home/mrdzen/folda";
+    final static String PATH_SOURCE = "/home/mrdzen/folda/";
+    final static String PATH_OUTPUT = "/home/mrdzen/temp/";
     public static void main(String[] args) {
 
-        System.out.println("Total files in directory:"+fileCounter(PATH));
+        System.out.println("Total files in directory:"+fileCounter(PATH_SOURCE));
 
-        fileCounter1(PATH);
+        fileCounter1(PATH_SOURCE);
+        fileRenamer();
     }
 
     private static int fileCounter(String pathFolder) {
@@ -37,6 +39,28 @@ public class Main {
         }
         System.out.println("File Count:"+fileNames.size());
     }
+
+    private static void fileRenamer()
+    {
+        String prefix="";
+        File folder = new File(PATH_SOURCE);
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+
+            if (listOfFiles[i].isFile()) {
+
+                File f = new File(PATH_SOURCE +listOfFiles[i].getName());
+                if( (i>=0) && (i<10))
+                {prefix="0"+i;}
+                else {prefix = String.valueOf(i);}
+                f.renameTo(new File(PATH_OUTPUT +prefix+".png"));
+            }
+        }
+    }
+
+
+
 
 
 }
